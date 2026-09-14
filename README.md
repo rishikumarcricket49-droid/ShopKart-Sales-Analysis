@@ -160,3 +160,61 @@ This project uses SQL to answer real-world business questions such as:
 - Date Functions
 
 ---
+---
+
+## 📈 Key Analysis
+
+### 💰 Sales Analysis
+
+- Total sales revenue
+- Category-wise sales
+- Product-wise revenue
+
+### 📦 Product Analysis
+
+- Most sold products
+- Highest revenue-generating products
+- Product performance by category
+
+### 👥 Customer Analysis
+
+- Customer-wise order count
+- Top customers by orders
+- Customer purchasing patterns
+
+### 🛍️ Order Analysis
+
+- Order status distribution
+- Delivered, Pending and Cancelled orders
+- Order trends
+
+### 💳 Payment Analysis
+
+- Payment methods
+- Successful and failed payments
+- Payment amount analysis
+
+---
+---
+
+## 📊 Key Results
+
+Based on the SQL analysis performed on the ShopKart dataset:
+
+| Metric | Result |
+|---|---:|
+| 💰 Total Sales | ₹5,18,200 |
+| 🏆 Top Sales Category | Electronics — ₹4,33,700 |
+| 📦 Most Sold Product | Notebook — 12 units |
+| 💵 Highest Revenue Product | Laptop — ₹2,75,000 |
+| 👤 Top Customer by Orders | RAHUL KUMAR — 3 orders |
+
+### 💡 Business Insights
+
+- **Electronics** generates the highest sales among all categories.
+- **Laptop** is the highest revenue-generating product.
+- **Notebook** has the highest sales quantity, with 12 units sold.
+- **RAHUL KUMAR** has the highest number of orders, with 3 orders.
+- The analysis helps identify high-performing products, categories, and customers.
+
+---
