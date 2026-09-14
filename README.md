@@ -214,7 +214,54 @@ Based on the SQL analysis performed on the ShopKart dataset:
 - **Electronics** generates the highest sales among all categories.
 - **Laptop** is the highest revenue-generating product.
 - **Notebook** has the highest sales quantity, with 12 units sold.
+
 - **RAHUL KUMAR** has the highest number of orders, with 3 orders.
 - The analysis helps identify high-performing products, categories, and customers.
 
 ---
+---
+
+## 💻 SQL Analysis Showcase
+
+### 1. 💰 Total Sales
+
+Calculates the total revenue generated from products sold.
+
+```sql
+SELECT 
+    SUM(price * quantity) AS total_sales
+FROM order_items
+JOIN products
+ON order_items.product_id = products.product_id;
+SELECT 
+    category,
+    SUM(price * quantity) AS category_sales
+FROM order_items
+JOIN products
+ON order_items.product_id = products.product_id
+GROUP BY category
+ORDER BY category_sales DESC;
+SELECT 
+    product_name,
+    SUM(quantity) AS total_quantity_sold
+FROM products
+JOIN order_items
+ON products.product_id = order_items.product_id
+GROUP BY product_name
+ORDER BY total_quantity_sold DESC;
+SELECT 
+    product_name,
+    SUM(price * quantity) AS revenue
+FROM products
+JOIN order_items
+ON products.product_id = order_items.product_id
+GROUP BY product_name
+ORDER BY revenue DESC;
+SELECT 
+    customer_name,
+    COUNT(order_id) AS total_orders
+FROM customers
+JOIN orders
+ON customers.customer_id = orders.customer_id
+GROUP BY customer_name
+ORDER BY total_orders DESC;
