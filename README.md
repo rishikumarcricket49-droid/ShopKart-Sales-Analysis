@@ -220,12 +220,13 @@ Based on the SQL analysis performed on the ShopKart dataset:
 
 ---
 ---
-
 ## 💻 SQL Analysis Showcase
+
+The project includes 25 SQL analyses covering sales, products, customers, orders, payments, and business performance.
 
 ### 1. 💰 Total Sales
 
-Calculates the total revenue generated from products sold.
+Calculates the total sales value generated from products sold.
 
 ```sql
 SELECT 
@@ -233,6 +234,9 @@ SELECT
 FROM order_items
 JOIN products
 ON order_items.product_id = products.product_id;
+
+##2.🏆 Category-wise Sales
+
 SELECT 
     category,
     SUM(price * quantity) AS category_sales
@@ -241,6 +245,9 @@ JOIN products
 ON order_items.product_id = products.product_id
 GROUP BY category
 ORDER BY category_sales DESC;
+
+3. 📦 Most Sold Products
+
 SELECT 
     product_name,
     SUM(quantity) AS total_quantity_sold
@@ -249,6 +256,9 @@ JOIN order_items
 ON products.product_id = order_items.product_id
 GROUP BY product_name
 ORDER BY total_quantity_sold DESC;
+
+4. 💵 Product-wise Revenue
+
 SELECT 
     product_name,
     SUM(price * quantity) AS revenue
@@ -257,11 +267,255 @@ JOIN order_items
 ON products.product_id = order_items.product_id
 GROUP BY product_name
 ORDER BY revenue DESC;
+
+5. 👥 Customer-wise Order Analysis
+
 SELECT 
+    customer_name,
+    COUNT(order_id) AS total_orders
+FROM customers;
+SELECT 
+    customer_name,
+    SUM(price * quantity) AS total_revenue
+FROM customers
+JOIN orders
+    ON customers.customer_id = orders.customer_id
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+JOIN products
+    ON order_items.product_id = products.product_id
+GROUP BY customer_name
+ORDER BY total_revenue DESC;
+SELECT
+    MONTH(order_date) AS month,
+    SUM(price * quantity) AS total_sales
+FROM orders
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+JOIN products
+    ON order_items.product_id = products.product_id
+GROUP BY MONTH(order_date)
+ORDER BY month;
+SELECT
+    order_status,
+    COUNT(order_id) AS total_orders
+FROM orders
+GROUP BY order_status
+ORDER BY total_orders DESC;
+SELECT
+    payment_method,
+    COUNT(payment_id) AS total_payments
+FROM payments
+GROUP BY payment_method
+ORDER BY total_payments DESC;
+SELECT
+    payment_status,
+    COUNT(payment_id) AS total_payments
+FROM payments
+GROUP BY payment_status
+ORDER BY total_payments DESC;
+SELECT
+    AVG(order_total) AS average_order_value
+FROM (
+    SELECT
+        order_id,
+        SUM(price * quantity) AS order_total
+    FROM order_items
+    JOIN products
+        ON order_items.product_id = products.product_id
+    GROUP BY order_id
+) AS order_summary;
+SELECT
+    customer_name,
+    SUM(price * quantity) AS total_revenue
+FROM customers
+JOIN orders
+    ON customers.customer_id = orders.customer_id
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+JOIN products
+    ON order_items.product_id = products.product_id
+GROUP BY customer_name
+ORDER BY total_revenue DESC
+LIMIT 5;
+SELECT
+    MONTH(order_date) AS month,
+    SUM(price * quantity) AS total_sales
+FROM orders
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+JOIN products
+    ON order_items.product_id = products.product_id
+GROUP BY MONTH(order_date)
+ORDER BY month;
+SELECT
+    SUM(payment_amount) AS total_successful_payment
+FROM payments
+WHERE payment_status = 'Success';
+SELECT
+    COUNT(DISTINCT orders.order_id) AS cancelled_orders,
+    SUM(price * quantity) AS cancelled_order_value
+FROM orders
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+JOIN products
+    ON order_items.product_id = products.product_id
+WHERE order_status = 'Cancelled';
+SELECT
+    category,
+    SUM(quantity) AS total_quantity_sold
+FROM products
+JOIN order_items
+    ON products.product_id = order_items.product_id
+GROUP BY category
+ORDER BY total_quantity_sold DESC;
+SELECT
+    product_name,
+    SUM(quantity) AS total_quantity_sold
+FROM products
+JOIN order_items
+    ON products.product_id = order_items.product_id
+GROUP BY product_name
+ORDER BY total_quantity_sold DESC
+LIMIT 5;
+SELECT
+    category,
+    AVG(price) AS average_price
+FROM products
+GROUP BY category
+ORDER BY average_price DESC;
+SELECT
+    product_name,
+    category,
+    stock_quantity
+FROM products
+WHERE stock_quantity < 30
+ORDER BY stock_quantity ASC;
+SELECT
+    city,
+    COUNT(customer_id) AS total_customers
+FROM customers
+GROUP BY city
+ORDER BY total_customers DESC;
+SELECT
+    MONTH(signup_date) AS month,
+    COUNT(customer_id) AS new_customers
+FROM customers
+GROUP BY MONTH(signup_date)
+ORDER BY month;
+SELECT
+    customer_name,
+    SUM(price * quantity) AS total_order_value
+FROM customers
+JOIN orders
+    ON customers.customer_id = orders.customer_id
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+JOIN products
+    ON order_items.product_id = products.product_id
+GROUP BY customer_name
+ORDER BY total_order_value DESC;
+SELECT
+    order_status,
+    COUNT(order_id) AS total_orders,
+    ROUND(
+        COUNT(order_id) * 100.0 / (SELECT COUNT(*) FROM orders),
+        2
+    ) AS order_percentage
+FROM orders
+GROUP BY order_status
+ORDER BY order_percentage DESC;
+SELECT
+    payment_method,
+    SUM(payment_amount) AS total_payment_amount
+FROM payments
+WHERE payment_status = 'Success'
+GROUP BY payment_method
+ORDER BY total_payment_amount DESC;
+SELECT
+    MONTH(order_date) AS month,
+    COUNT(order_id) AS total_orders
+FROM orders
+GROUP BY MONTH(order_date)
+ORDER BY month;
+SELECT
+    product_name,
+    SUM(price * quantity) AS total_revenue
+FROM products
+JOIN order_items
+    ON products.product_id = order_items.product_id
+GROUP BY product_name
+ORDER BY total_revenue DESC
+LIMIT 5;
+SELECT
+    city,
+    SUM(price * quantity) AS total_revenue
+FROM customers
+JOIN orders
+    ON customers.customer_id = orders.customer_id
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+JOIN products
+    ON order_items.product_id = products.product_id
+GROUP BY city
+ORDER BY total_revenue DESC;
+SELECT
     customer_name,
     COUNT(order_id) AS total_orders
 FROM customers
 JOIN orders
-ON customers.customer_id = orders.customer_id
+    ON customers.customer_id = orders.customer_id
 GROUP BY customer_name
+HAVING COUNT(order_id) >= 2
 ORDER BY total_orders DESC;
+SELECT
+    customer_name,
+    COUNT(order_id) AS total_orders
+FROM customers
+JOIN orders
+    ON customers.customer_id = orders.customer_id
+GROUP BY customer_name
+HAVING COUNT(order_id) >= 2
+ORDER BY total_orders DESC;
+SELECT
+    customer_name,
+    ROUND(SUM(price * quantity) / COUNT(DISTINCT orders.order_id), 2) AS average_order_value
+FROM customers
+JOIN orders
+    ON customers.customer_id = orders.customer_id
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+JOIN products
+    ON order_items.product_id = products.product_id
+GROUP BY customer_name
+ORDER BY average_order_value DESC;
+SELECT
+    SUM(price * quantity) AS delivered_sales
+FROM orders
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+JOIN products
+    ON order_items.product_id = products.product_id
+WHERE order_status = 'Delivered';
+SELECT
+    category,
+    SUM(quantity) AS total_quantity_sold,
+    SUM(price * quantity) AS total_sales
+FROM products
+JOIN order_items
+    ON products.product_id = order_items.product_id
+GROUP BY category
+ORDER BY total_sales DESC;
+SELECT
+    COUNT(DISTINCT orders.order_id) AS total_orders,
+    COUNT(DISTINCT customers.customer_id) AS total_customers,
+    COUNT(DISTINCT products.product_id) AS total_products,
+    SUM(order_items.quantity) AS total_units_sold,
+    SUM(products.price * order_items.quantity) AS total_sales
+FROM orders
+JOIN customers
+    ON orders.customer_id = customers.customer_id
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+JOIN products
+    ON order_items.product_id = products.product_id;
