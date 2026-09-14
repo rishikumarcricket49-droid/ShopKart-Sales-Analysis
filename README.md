@@ -120,8 +120,27 @@ Order_Items
     │ product_id
     ▼
 Products
-
 Orders
+    │
+    │ order_id
+    ▼
+Payments
+---
+
+## 🔍 Business Questions
+
+This project uses SQL to answer real-world business questions such as:
+
+- What is the total sales revenue?
+- Which product generates the highest revenue?
+- Which products are sold the most?
+- Which category generates the highest sales?
+- Which customers place the most orders?
+- What is the order status distribution?
+- Which payment methods are used most frequently?
+- Which customers contribute the most revenue?
+
+---
     │
     │ order_id
     ▼
