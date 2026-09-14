@@ -141,7 +141,22 @@ This project uses SQL to answer real-world business questions such as:
 - Which customers contribute the most revenue?
 
 ---
-    │
-    │ order_id
-    ▼
-Payments
+   
+
+## 🧠 SQL Concepts Used
+
+- `SELECT`
+- `WHERE`
+- `GROUP BY`
+- `ORDER BY`
+- Aggregate Functions
+- `SUM()`
+- `COUNT()`
+- `AVG()`
+- `INNER JOIN`
+- `LEFT JOIN`
+- `CASE`
+- Subqueries
+- Date Functions
+
+---
